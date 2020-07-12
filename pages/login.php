@@ -1,3 +1,38 @@
+<?php
+// Only executes for POST request
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+
+    session_start();
+
+    if ($email === '' || $password === '') {
+        $errorMessage = "Email & Password cannot be empty";
+    }
+
+    $conn = mysqli_connect('localhost', 'admin', 'admin1234', 'web_technology');
+
+    if (!$conn) {
+        $errorMessage = "Oops! Database Connection Failed";
+    }
+
+    $query = "SELECT * FROM LOGIN WHERE EMAIL = '$email'";
+
+    $result = mysqli_query($conn, $query);
+
+    $user_array = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    if (empty($user_array)) {
+        $errorMessage = "User not found";
+    }
+    else if ($user_array[0]['password'] === $password) {
+        header("Location: /pages/profile.php");
+    } else {
+        $errorMessage = "Invalid Password";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,13 +62,11 @@
     <main>
         <h2>Login</h2>
         <?php
-            session_start();
-            $loginError =$_SESSION['login_error'];
-            if($loginError){
-                echo "<p>$loginError</p>";
-            }
+        if (isset($errorMessage)) {
+            echo "<p>$errorMessage</p>";
+        }
         ?>
-        <form action="../server/login.php" id="login-form" autocomplete="off" method="POST">
+        <form action="login.php" id="login-form" autocomplete="off" method="POST">
             <div class="input-wrapper">
                 <input type="text" name="email" id="email-input" placeholder="Email">
                 <p class="error-msg" id="email-error">Invalid email</p>

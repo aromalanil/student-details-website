@@ -25,7 +25,6 @@ passwordInput.addEventListener('input', () => {
 
 
 let validateForm = () => {
-    return true;
     let isEmailValid = validateEmail();
     let isPasswordValid = validatePassword();
     return (isEmailValid && isPasswordValid);
