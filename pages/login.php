@@ -25,10 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($user_array)) {
         $errorMessage = "User not found";
-    }
-    else if ($user_array[0]['password'] === $password) {
+    } else if ($user_array[0]['password'] === $password) {
+        $_SESSION['user-email'] = $email;
         header("Location: /pages/profile.php");
-    } else {
+    }
+    else {
         $errorMessage = "Invalid Password";
     }
 }
@@ -39,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | Web Technology Assignment</title>
+    <title>Login | Web Technology Assignment</title>
     <link rel="icon" href="../src/img/favicon.png" type="image/png">
 
     <!--------------- Linking CSS --------------->
@@ -68,11 +69,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ?>
         <form action="login.php" id="login-form" autocomplete="off" method="POST">
             <div class="input-wrapper">
-                <input type="text" name="email" id="email-input" placeholder="Email">
+                <input required type="text" name="email" id="email-input" placeholder="Email">
                 <p class="error-msg" id="email-error">Invalid email</p>
             </div>
             <div class="input-wrapper">
-                <input type="password" name="password" id="password-input" placeholder="Password">
+                <input required type="password" name="password" id="password-input" placeholder="Password">
                 <p class="error-msg" id="password-error">Invalid Password</p>
             </div>
             <button type="submit" id="login-btn" class="btn">

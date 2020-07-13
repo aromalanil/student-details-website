@@ -1,10 +1,12 @@
 let isPasswordError = false;
 let isEmailError = false;
-let loginForm = document.getElementById('login-form');
+let isRePasswordError = false;
+let signUpForm = document.getElementById('sign-up-form');
 let emailInput = document.getElementById('email-input');
 let passwordInput = document.getElementById('password-input');
+let rePasswordInput = document.getElementById('re-password-input');
 
-loginForm.addEventListener('submit', (e) => {
+signUpForm.addEventListener('submit', (e) => {
     e.preventDefault();
     if (validateForm()) {
         e.target.submit();
@@ -23,12 +25,18 @@ passwordInput.addEventListener('input', () => {
     }
 });
 
+rePasswordInput.addEventListener('input', () => {
+    if (isRePasswordError) {
+        validateRePassword();
+    }
+});
+
 
 let validateForm = () => {
-    return true;
     let isEmailValid = validateEmail();
     let isPasswordValid = validatePassword();
-    return (isEmailValid && isPasswordValid);
+    let isRePasswordValid = validateRePassword();
+    return (isEmailValid && isPasswordValid && isRePasswordValid);
 };
 
 let validateEmail = () => {
@@ -36,20 +44,20 @@ let validateEmail = () => {
     let email = emailInput.value;
     if (email === '') {
         isEmailError = true;
-        disableLoginButton();
+        disableSignUpButton();
         showErrorMessage(emailErrorMessage, "Email cannot be empty");
         return false;
     }
     if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
         isEmailError = true;
-        disableLoginButton();
+        disableSignUpButton();
         showErrorMessage(emailErrorMessage, "Enter a valid email");
         return false;
     }
     hideErrorMessage(emailErrorMessage);
     isEmailError = false;
-    if (!isPasswordError) {
-        enableLoginButton();
+    if (!isPasswordError && !isRePasswordError) {
+        enableSignUpButton();
     }
     return true;
 };
@@ -59,32 +67,51 @@ let validatePassword = () => {
     let password = passwordInput.value;
     if (password === '') {
         isPasswordError = true;
-        disableLoginButton();
+        disableSignUpButton();
         showErrorMessage(passwordErrorMessage, "Password cannot be empty");
         return false;
     }
-    if(password.length<6){
+    if (password.length < 6) {
         isPasswordError = true;
-        disableLoginButton();
+        disableSignUpButton();
         showErrorMessage(passwordErrorMessage, "Password must contain 6 characters");
         return false;
     }
     hideErrorMessage(passwordErrorMessage);
     isPasswordError = false;
-    if (!isEmailError) {
-        enableLoginButton();
+    if (!isEmailError && !isRePasswordError) {
+        enableSignUpButton();
     }
     return true;
 };
 
+let validateRePassword = () => {
+    let rePasswordErrorMessage = document.getElementById('re-password-error');
+    let password = passwordInput.value;
+    let rePassword = rePasswordInput.value;
+    if (!isPasswordError) {
+        if (password !== rePassword) {
+            disableSignUpButton();
+            showErrorMessage(rePasswordErrorMessage, "Password mismatch");
+            return false;
+        }
+        hideErrorMessage(rePasswordErrorMessage);
+        isRePasswordError = false;
+        if (!isPasswordError && !isRePasswordError) {
+            enableSignUpButton();
+        }
+        return true;
+    }
+};
 
-let disableLoginButton = () => {
-    let loginButton = document.getElementById("login-btn");
-    loginButton.disabled = true;
+
+let disableSignUpButton = () => {
+    let signUpButton = document.getElementById("sign-up-btn");
+    signUpButton.disabled = true;
 }
-let enableLoginButton = () => {
-    let loginButton = document.getElementById("login-btn");
-    loginButton.disabled = false;
+let enableSignUpButton = () => {
+    let signUpButton = document.getElementById("sign-up-btn");
+    signUpButton.disabled = false;
 }
 
 let showErrorMessage = (element, message) => {

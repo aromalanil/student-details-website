@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | Web Technology Assignment</title>
+    <title>Sign Up | Web Technology Assignment</title>
     <link rel="icon" href="../src/img/favicon.png" type="image/png">
 
     <!--------------- Linking CSS --------------->
@@ -26,24 +26,24 @@
 
     <main>
         <h2>Sign Up</h2>
-        <form action="../server/sign-up.php" id="login-form" autocomplete="off" method="POST">
+        <form action="sign-up.php" id="sign-up-form" autocomplete="off" method="POST">
             <div class="input-wrapper">
-                <input type="text" name="email" id="email-input" placeholder="Email">
+                <input required type="text" name="email" id="email-input" placeholder="Email">
                 <p class="error-msg" id="email-error">Invalid email</p>
             </div>
             <div class="input-wrapper">
-                <input type="password" name="password" id="password-input" placeholder="Password">
+                <input required type="password" name="password" id="password-input" placeholder="Password">
                 <p class="error-msg" id="password-error">Invalid Password</p>
             </div>
             <div class="input-wrapper">
-                <input type="password" name="re-password" id="re-password-input" placeholder="Re-enter Password">
+                <input required type="password" name="re-password" id="re-password-input" placeholder="Re-enter Password">
                 <p class="error-msg" id="re-password-error">Password do not match</p>
             </div>
             <button type="submit" id="sign-up-btn" class="btn">
                 Sign Up
             </button>
         </form>
-        <p>Don't have an account?&nbsp;<a href="./sign-up.php">Sign Up</a></p>
+        <p>Already have an account?&nbsp;<a href="./login.php">Login</a></p>
     </main>
 
     <?php include "../layout/footer.php" ?>

@@ -23,7 +23,6 @@ passwordInput.addEventListener('input', () => {
     }
 });
 
-
 let validateForm = () => {
     let isEmailValid = validateEmail();
     let isPasswordValid = validatePassword();
