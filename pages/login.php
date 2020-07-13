@@ -69,11 +69,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ?>
         <form action="login.php" id="login-form" autocomplete="off" method="POST">
             <div class="input-wrapper">
-                <input required type="text" name="email" id="email-input" placeholder="Email">
+                <input type="text" name="email" id="email-input" placeholder="Email">
                 <p class="error-msg" id="email-error">Invalid email</p>
             </div>
             <div class="input-wrapper">
-                <input required type="password" name="password" id="password-input" placeholder="Password">
+                <input type="password" name="password" id="password-input" placeholder="Password">
                 <p class="error-msg" id="password-error">Invalid Password</p>
             </div>
             <button type="submit" id="login-btn" class="btn">
