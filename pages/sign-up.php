@@ -1,3 +1,39 @@
+<?php
+// Only executes for POST request
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+
+    if ($email === '' || $password === '') {
+        $errorMessage = "Email & Password cannot be empty";
+    }
+
+    $conn = mysqli_connect('localhost', 'admin', 'admin1234', 'web_technology');
+
+    if (!$conn) {
+        $errorMessage = "Oops! Database Connection Failed";
+    }
+
+    $getUserQuery = "SELECT * FROM LOGIN WHERE EMAIL = '$email'";
+
+    $result = mysqli_query($conn, $getUserQuery);
+
+    $user_array = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    if (!empty($user_array)) {
+        $errorMessage = "Email ID provided is already registered";
+    } else {
+        $registerUserQuery = "INSERT INTO LOGIN (EMAIL,PASSWORD) VALUES ('$email','$password')";
+
+        if ($conn->query($registerUserQuery) === TRUE) {
+            $errorMessage = "New record created successfully";
+        } else {
+            $errorMessage = "Error: Occurred";
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,6 +61,11 @@
 
     <main>
         <h2>Sign Up</h2>
+        <?php
+        if (isset($errorMessage)) {
+            echo "<p>$errorMessage</p>";
+        }
+        ?>
         <form action="sign-up.php" id="sign-up-form" class="form" autocomplete="off" method="POST">
             <div class="input-wrapper">
                 <input type="text" name="email" id="email-input" placeholder="Email">
@@ -35,7 +76,7 @@
                 <p class="error-msg" id="password-error">Invalid Password</p>
             </div>
             <div class="input-wrapper">
-                <input type="password" name="re-password" id="re-password-input" placeholder="Re-enter Password">
+                <input type="password" id="re-password-input" placeholder="Re-enter Password">
                 <p class="error-msg" id="re-password-error">Password do not match</p>
             </div>
             <button class="btn form-btn" type="submit" id="sign-up-btn">

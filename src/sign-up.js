@@ -14,7 +14,7 @@ let validateForm = () => {
     let isEmailValid = validateEmail();
     let isPasswordValid = validatePassword();
     let isRePasswordValid = validateRePassword();
-    return isEmailValid && isPasswordValid;
+    return isEmailValid && isPasswordValid && isRePasswordValid;
 };
 
 let validateEmail = () => {
