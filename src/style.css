@@ -40,7 +40,6 @@ h4,
 h5,
 h6 {
   color: var(--font-color);
-  font-family: "Montserrat", sans-serif;
   font-family: "Noto Sans", sans-serif;
 }
 
@@ -78,7 +77,8 @@ input[type=text]:focus,input[type=password]:focus{
 
 button{
   cursor: pointer;
-  font-family: var(-);
+  white-space: nowrap;
+  font-family: "Noto Sans", sans-serif;
   border: none;
   font-size: 1.5rem;
   line-height: 1.7rem;

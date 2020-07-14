@@ -144,7 +144,7 @@ caption{
 }
 
 /* Login Page */
-#login-form,#sign-up-form{
+.form{
   margin-top: 3rem;
   display:flex;
   flex-direction: column;
@@ -167,13 +167,13 @@ caption{
   top:1.5rem;
   font-size: 1.15rem;
 }
-#login-btn,#sign-up-btn{
+.form-btn{
   margin-top: 2rem;
-  width:fit-content;
+  width:min-content;
 }
 
 @media screen and (max-width: 600px) {
-  #login-form,#sign-up-form{
+  .form{
     align-items:flex-end;
     max-width: 95%;
     margin: auto;

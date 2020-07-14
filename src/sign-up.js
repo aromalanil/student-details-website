@@ -1,19 +1,20 @@
 let emailInput = document.getElementById('email-input');
 let passwordInput = document.getElementById('password-input');
+let rePasswordInput = document.getElementById('re-password-input');
 let signUpForm = document.getElementById('sign-up-form');
 
-signUpForm.addEventListener('submit',(e)=>{
+signUpForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    if(validateForm()){
+    if (validateForm()) {
         e.target.submit();
     }
 });
 
 let validateForm = () => {
-   let isEmailValid= validateEmail();
-   let isPasswordValid =validatePassword();
-   let isRePasswordValid = validatePass
-   return isEmailValid && isPasswordValid;
+    let isEmailValid = validateEmail();
+    let isPasswordValid = validatePassword();
+    let isRePasswordValid = validateRePassword();
+    return isEmailValid && isPasswordValid;
 };
 
 let validateEmail = () => {
@@ -38,13 +39,31 @@ let validatePassword = () => {
         showErrorMessage(passwordErrorMessage, "Password cannot be empty");
         return false;
     }
-    if(password.length<6){
+    if (password.length < 6) {
         showErrorMessage(passwordErrorMessage, "Password must contain 6 characters");
         return false;
     }
     hideErrorMessage(passwordErrorMessage);
     return true;
 };
+
+let validateRePassword = () => {
+    let rePasswordErrorMessage = document.getElementById('re-password-error');
+    let password = passwordInput.value;
+    let rePassword = rePasswordInput.value;
+    if (rePassword === '') {
+        showErrorMessage(rePasswordErrorMessage, "This field cannot be empty");
+        return false;
+    }
+    if (validatePassword()) {
+        if (password !== rePassword) {
+            showErrorMessage(rePasswordErrorMessage, "Password Mismatch");
+            return false;
+        }
+    }
+    hideErrorMessage(rePasswordErrorMessage);
+    return true;
+}
 
 
 let showErrorMessage = (element, message) => {
