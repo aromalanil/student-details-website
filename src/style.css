@@ -19,7 +19,7 @@ html {
 }
 
 p,
-li,tr,caption {
+li,tr,caption,label {
   color: var(--font-color);
   font-family: "Montserrat", sans-serif;
   line-height: 2.5rem;
@@ -56,7 +56,7 @@ h3{
     font-size: 1.5rem;
 }
 
-input[type=text],input[type=password]{  
+input[type=text],input[type=password],select{  
   margin: 1rem 0;
   font-size: 1.5rem;
   padding: 1rem 2rem;
@@ -85,6 +85,10 @@ button{
   padding: .7rem 2rem;
   border-radius: 2rem;
   transition: .5s;
+  transition-property: transform,filter;
+}
+button:hover{
+  filter:brightness(.9);
 }
 button:focus{
   outline: none;

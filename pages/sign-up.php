@@ -27,11 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $registerUserQuery = "INSERT INTO LOGIN (EMAIL,PASSWORD) VALUES ('$email','$password')";
 
         if ($conn->query($registerUserQuery) === TRUE) {
-            $errorMessage = "New record created successfully";
+            session_start();
+            $_SESSION['user-email'] = $email;
+            header("Location: /pages/edit-user-details.php");
         } else {
             $errorMessage = "Error: Occurred";
         }
     }
+    mysqli_close($conn);
 }
 ?>
 <!DOCTYPE html>

@@ -1,11 +1,11 @@
 <?php
+session_start();
+
 // Only executes for POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $email = $_POST["email"];
     $password = $_POST["password"];
-
-    session_start();
 
     if ($email === '' || $password === '') {
         $errorMessage = "Email & Password cannot be empty";
@@ -28,11 +28,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else if ($user_array[0]['password'] === $password) {
         $_SESSION['user-email'] = $email;
         header("Location: /pages/profile.php");
-    }
-    else {
+    } else {
         $errorMessage = "Invalid Password";
     }
+
+    mysqli_close($conn);
+
+} else if (isset($_SESSION['user-email'])) {
+    header("Location: /pages/profile.php");
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="password" name="password" id="password-input" placeholder="Password">
                 <p class="error-msg" id="password-error">Invalid Password</p>
             </div>
-            <button class="btn form-btn" type="submit" id="login-btn" >
+            <button class="btn form-btn" type="submit" id="login-btn">
                 Login
             </button>
         </form>

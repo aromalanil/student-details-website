@@ -1,3 +1,29 @@
+<?php
+session_start();
+if (!isset($_SESSION['user-email'])) {
+    header("Location: /pages/login.php");
+}
+$email = $_SESSION['user-email'];
+$conn = mysqli_connect('localhost', 'admin', 'admin1234', 'web_technology');
+if (!$conn) {
+    $errorMessage = "Oops! Database Connection Failed";
+}
+$getDetailsQuery = "SELECT * FROM USER_DETAILS WHERE EMAIL = '$email'";
+
+$result = mysqli_query($conn, $getDetailsQuery);
+$user_array = mysqli_fetch_all($result, MYSQLI_ASSOC);
+if (!empty($user_array)) {
+    $subject1 = $user_array[0]['Subject_1'];
+    $subject2 = $user_array[0]['Subject_2'];
+    $subject3 = $user_array[0]['Subject_3'];
+    $subject4 = $user_array[0]['Subject_4'];
+    $subject5 = $user_array[0]['Subject_5'];
+    $subject6 = $user_array[0]['Subject_6'];
+    $totalMark = $user_array[0]['Total_mark'];
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,17 +50,39 @@
 
     <main>
         <div class="profile-div">
-            <div class="hero">
-                <img class="profile-image" src="../src/img/aromal_anil.webp" alt="Aromal Anil">
-                <h2>Aromal Anil</h2>
+            <div class="profile-btns">
+                <button onclick="window.location.href = '/pages/edit-user-details.php'"  class="btn">Edit Details</button>
+                <button onclick="window.location.href = '/server/logout.php'"  class="btn">Logout</button>
             </div>
-
+            <?php
+            echo "<h2>$email</h2>";
+            ?>
+            
             <ul class="profile-details">
-                <li>Class : S6 CS</li>
-                <li>Phone : <a target="_blank" href="tel:+919207980389">9207980389</a></li>
-                <li>E-mail : <a target="_blank" href="mailto:contact@aromalanil.me">contact@aromalanil.me</a></li>
-                <li>Website : <a target="_blank" href="https://aromalanil.me">aromalanil.me</a></li>
-                <li>Address : Thakidiveli&nbsp;House, Kalavoor&nbsp;P.O,&nbsp;Alappuzha</li>
+                <?php
+                if (!empty($user_array)) {
+                    echo "
+                    <li>Subject 1 : ${subject1}</li>
+                    <li>Subject 2 : ${subject2}</li>
+                    <li>Subject 3 : ${subject3}</li>
+                    <li>Subject 4 : ${subject4}</li>
+                    <li>Subject 5 : ${subject5}</li>
+                    <li>Subject 6 : ${subject6}</li>
+                    <li>Total Marks : ${totalMark}</li>
+                    ";
+                }
+                else{
+                    echo "
+                    <li>Subject 1 : No Data</li>
+                    <li>Subject 2 : No Data</li>
+                    <li>Subject 3 : No Data</li>
+                    <li>Subject 4 : No Data</li>
+                    <li>Subject 5 : No Data</li>
+                    <li>Subject 6 : No Data</li>
+                    <li>Total Marks : No Data</li>
+                    ";
+                }
+                ?>
             </ul>
 
         </div>
