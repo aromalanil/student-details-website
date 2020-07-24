@@ -17,5 +17,6 @@
         <li><a class="nav-link" href="/pages/profile.php">My Profile</a></li>
         <li><a class="nav-link" href="/pages/sign-up.php">Sign Up</a></li>
         <li><a class="nav-link" href="/pages/login.php">Login</a></li>
+        <li><a class="nav-link" href="/pages/change-password.php">Change Password</a></li>
     </ul>
 </nav>
